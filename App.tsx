@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, Image, ActivityIndicator } from 'react-native';
 import { Input, Button } from './components';
 import { retrieve } from './serivces/reservation';
-//import {ReactComponent as Logo} from './assets/logo.png';
+import logo from './components/logo.jpg';
 export default function App() {
 
   const [input, setInput] = useState('');
@@ -49,6 +49,9 @@ function renderReservations() {
 return (
   <View style={styles.container}>
     <View style={styles.header}>
+      <div>
+        <img src={logo} alt="Reservation Logo" height="50" width='150'  />
+      </div>
       <View style={styles.button}>
       <Button title="Display Reservations" onPress={handleGoPress} />
       </View>
@@ -78,7 +81,7 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       backgroundColor: 'teal',
       alignSelf: "flex-start",
-      marginLeft: "48%",
+      marginLeft: "40%",
   },
   body: {
     flex: 1,
