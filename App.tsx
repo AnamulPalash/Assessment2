@@ -1,30 +1,26 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Image, ActivityIndicator } from 'react-native';
-import { Input, Button } from './components';
+import { Button } from './components';
 import { retrieve } from './serivces/reservation';
 import logo from './components/logo.jpg';
-export default function App() {
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
-  const [input, setInput] = useState('');
+export default function App() {
   const [reserve, setReserve] = useState([]);
   const [loading, setLoading] = useState(false);
 ////////
 function handleGoPress() {
-  //if (input.trim().length < 1) { // #1.a
-  //  return;
-  //}
   setLoading(true);
   retrieve().then((data: any) => {
     setLoading(false);
-    if (data) { // #1.b
+    if (data) { 
       setReserve(data);
     }
   }).catch(error => {
     setLoading(false);
   });
 }
-
 function renderReservations() {
   return reserve.map((m: any) => (
     <View key={m.id} style={styles.row}>
@@ -50,9 +46,11 @@ return (
   <View style={styles.container}>
     <View style={styles.header}>
       <div>
-        <img src={logo} alt="Reservation Logo" height="50" width='150'  />
+      
       </div>
-      <View style={styles.button}>
+      <View style={styles.button}>  
+      <Image style={styles.logo} source={logo} />
+      <Image style={styles.logo} source={require('./components/logo.svg')} />
       <Button title="Display Reservations" onPress={handleGoPress} />
       </View>
     </View>
@@ -63,32 +61,32 @@ return (
   </View>
 );
 }
-
 ////
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-  },
+    width: wp('100%'),
+    },
   header: {
     flexDirection: 'row',
     padding: 20,
-    gap: 15,
     backgroundColor: 'teal',
+    textAlign: 'center',
+    justifyContent: 'center',
     },
   button: {
       flexDirection: 'row',
       backgroundColor: 'teal',
       alignSelf: "flex-start",
-      marginLeft: "40%",
+      alignItems: 'center',
   },
   body: {
     flex: 1,
     backgroundColor: 'mintcream',
     padding: 15,
   },
-  row: { // #2
+  row: {
     backgroundColor: 'mediumaquamarine',
     padding: 10,
     borderRadius: 5,
@@ -97,11 +95,14 @@ const styles = StyleSheet.create({
   },
   image: {
     width: 90,
-    height: 90,
+    height: hp('10.5%'),
     borderRadius: 4,
     marginHorizontal: "1%",
     marginTop: 3,
     marginBottom: 3,
   },
+  logo: {
+   resizeMode: 'contain',
+  }
 });
 
